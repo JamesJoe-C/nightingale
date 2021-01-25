@@ -37,6 +37,10 @@ func (p CollectRule) PluginName() string {
 	return p.CollectType
 }
 
+func (p *CollectRule) String() string {
+	return fmt.Sprintf("id %d type %s name %s", p.Id, p.CollectType, p.Name)
+}
+
 func (p *CollectRule) Validate(v ...interface{}) error {
 	if p.Name == "" {
 		return fmt.Errorf("invalid collectRule.name")
@@ -92,7 +96,7 @@ func GetCollectRules(typ string, nid int64, limit, offset int) (total int64, lis
 		return
 	}
 
-	err = search().Desc("created").Limit(limit, offset).Find(&list)
+	err = search().Desc("updated_at").Limit(limit, offset).Find(&list)
 	return
 }
 
